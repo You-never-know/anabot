@@ -1,0 +1,12 @@
+[Unit]
+Description=Fips workaround
+After=anaconda.service
+Before=anabot.service
+ConditionKernelCommandLine=fips=1
+
+[Service]
+ExecStart=/usr/bin/bash -c "sed -i 's/tls1-prf-ems-check = 1/tls1-prf-ems-check = 0/' /etc/crypto-policies/back-ends/openssl_fips.config"
+
+[Install]
+WantedBy=anabot.service
+WantedBy=anabot-direct.service
